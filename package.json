@@ -1,0 +1,20 @@
+{
+  "name": "codeceptjs-puppeteer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/luismanuel001/codeceptjs-puppeteer.git",
+  "author": "Luis Manuel <luisman40@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@types/node": "^10.12.0",
+    "codeceptjs": "^1.4.4",
+    "mocha": "^5.2.0",
+    "mocha-multi": "^1.0.1",
+    "mochawesome": "^3.1.1",
+    "puppeteer": "^1.9.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.3",
+    "unirest": "^0.5.1"
+  }
+}
