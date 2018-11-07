@@ -1,6 +1,7 @@
 {
   "name": "codeceptjs-puppeteer",
   "version": "1.0.0",
+  "description": "Docker image for running codeceptJS with puppeteer.",
   "main": "index.js",
   "repository": "https://github.com/luismanuel001/codeceptjs-puppeteer.git",
   "author": "Luis Manuel <luisman40@gmail.com>",

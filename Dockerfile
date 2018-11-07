@@ -25,27 +25,28 @@ RUN chmod +x /usr/local/bin/dumb-init
 #     browser.launch({executablePath: 'google-chrome-unstable'})
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
-# Install puppeteer, codeceptjs and helpers dependencies so they are available in the container.
-COPY ./package.json /package.json
-COPY ./package-lock.json /package-lock.json
-RUN npm install
-
 # Add user so we don't need --no-sandbox.
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
-    && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /node_modules
+    && chown -R pptruser:pptruser /home/pptruser
 
-RUN ln -s /node_modules/codeceptjs/bin/codecept.js /usr/local/bin/codeceptjs
+# Install puppeteer, codeceptjs and helpers dependencies so they are available in the container.
+COPY . /codecept
+RUN chown -R pptruser:pptruser /codecept
+RUN chmod +x /codecept/scripts/*
+RUN runuser -l pptruser -c 'npm install --loglevel=warn --prefix /codecept'
+
+RUN ln -s /codecept/node_modules/codeceptjs/bin/codecept.js /usr/local/bin/codeceptjs
 RUN mkdir /tests
 WORKDIR /tests
 
 # Allow to pass argument to codecept run via env variable
 ENV CODECEPT_ARGS=""
+ENV RUN_MULTIPLE=false
 
 # Run everything after as non-privileged user.
 USER pptruser
 
 ENTRYPOINT ["dumb-init", "--"]
 
-CMD ["bash", "codeceptjs run"]
+CMD ["bash", "/codecept/scripts/run.sh"]
