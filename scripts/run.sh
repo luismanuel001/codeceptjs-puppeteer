@@ -9,6 +9,11 @@ if [[ -d "/tests/" ]]; then
 
     # Run the tests
     cd /tests/
+
+    if [[ ! -d "/tests/node_modules" ]]; then
+        mkdir /tests/node_modules
+        ln -s /codecept/node_modules /tests/node_modules
+    fi
     if [ "$RUN_MULTIPLE" = true ]; then
         echo "Tests are split into chunks and executed in multiple processes."
         if [ ! "$CODECEPT_ARGS" ]; then
